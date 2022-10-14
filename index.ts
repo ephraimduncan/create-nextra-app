@@ -20,10 +20,10 @@ const program = new Commander.Command(packageJson.name)
     projectPath = name;
   })
   .option(
-    "--ts, --typescript",
+    "-b, --blog",
     `
 
-  Initialize as a TypeScript project.
+  Initialize as a Nextra Blog Theme.
 `
   )
   .option(
@@ -101,7 +101,7 @@ async function run(): Promise<void> {
     await createApp({
       appPath: resolvedProjectPath,
       packageManager,
-      typescript: program.typescript,
+      blog: program.blog,
     });
   } catch (reason) {
     if (!(reason instanceof DownloadError)) {
@@ -111,7 +111,7 @@ async function run(): Promise<void> {
     await createApp({
       appPath: resolvedProjectPath,
       packageManager,
-      typescript: program.typescript,
+      blog: program.blog,
     });
   }
 }

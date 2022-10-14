@@ -26,13 +26,13 @@ export class DownloadError extends Error {}
 export async function createApp({
   appPath,
   packageManager,
-  typescript,
+  blog,
 }: {
   appPath: string;
   packageManager: PackageManager;
-  typescript?: boolean;
+  blog?: boolean;
 }): Promise<void> {
-  const template = typescript ? "typescript" : "default-nextra";
+  const template = blog ? "blog" : "default-nextra";
   const root = path.resolve(appPath);
 
   if (!(await isWriteable(path.dirname(root)))) {
@@ -66,7 +66,6 @@ export async function createApp({
   /**
    * Create a package.json for the new project.
    */
-  // TODO: update next commands with nextra
   const packageJson = {
     name: appName,
     version: "0.1.0",
@@ -90,16 +89,10 @@ export async function createApp({
    */
   // TODO: Update dependencies to nextra dependencies
   let dependencies = ["react", "react-dom", "next", "nextra", "nextra-theme-docs"];
-  /**
-   * Default devDependencies.
-   */
-  /**
-   * TypeScript projects will have type definitions and other devDependencies.
-   */
-  // TODO: add blog template and blog tag and cmd option
-  // if (blog) {
-  //   dependencies = ["react", "react-dom", "next", "nextra", "nextra-theme-blog"];
-  // }
+
+  if (blog) {
+    dependencies = ["react", "react-dom", "next", "nextra", "nextra-theme-blog"];
+  }
   /**
    * Install package.json dependencies if they exist.
    */
@@ -111,7 +104,7 @@ export async function createApp({
     }
     console.log();
 
-    // TODO: pause instal for now
+    // TODO: pause install for now
     // await install(root, dependencies, installFlags);
     console.log("Install Complete: TODO: Replace");
   }
