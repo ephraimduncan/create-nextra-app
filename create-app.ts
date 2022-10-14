@@ -32,7 +32,7 @@ export async function createApp({
   packageManager: PackageManager;
   typescript?: boolean;
 }): Promise<void> {
-  const template = typescript ? "typescript" : "default";
+  const template = typescript ? "typescript" : "default-nextra";
   const root = path.resolve(appPath);
 
   if (!(await isWriteable(path.dirname(root)))) {
@@ -54,7 +54,7 @@ export async function createApp({
   const isOnline = !useYarn || (await getOnline());
   const originalDirectory = process.cwd();
 
-  console.log(`Creating a new Next.js app in ${chalk.green(root)}.`);
+  console.log(`Creating a new Nextra app in ${chalk.green(root)}.`);
   console.log();
 
   process.chdir(root);
@@ -75,7 +75,6 @@ export async function createApp({
       dev: "next dev",
       build: "next build",
       start: "next start",
-      lint: "next lint",
     },
   };
   /**
@@ -90,17 +89,17 @@ export async function createApp({
    * Default dependencies.
    */
   // TODO: Update dependencies to nextra dependencies
-  const dependencies = ["react", "react-dom", "next"];
+  let dependencies = ["react", "react-dom", "next", "nextra", "nextra-theme-docs"];
   /**
    * Default devDependencies.
    */
-  const devDependencies = ["eslint", "eslint-config-next"];
   /**
    * TypeScript projects will have type definitions and other devDependencies.
    */
-  if (typescript) {
-    devDependencies.push("typescript", "@types/react", "@types/node", "@types/react-dom");
-  }
+  // TODO: add blog template and blog tag and cmd option
+  // if (blog) {
+  //   dependencies = ["react", "react-dom", "next", "nextra", "nextra-theme-blog"];
+  // }
   /**
    * Install package.json dependencies if they exist.
    */
@@ -112,22 +111,11 @@ export async function createApp({
     }
     console.log();
 
-    await install(root, dependencies, installFlags);
+    // TODO: pause instal for now
+    // await install(root, dependencies, installFlags);
+    console.log("Install Complete: TODO: Replace");
   }
-  /**
-   * Install package.json devDependencies if they exist.
-   */
-  if (devDependencies.length) {
-    console.log();
-    console.log("Installing devDependencies:");
-    for (const devDependency of devDependencies) {
-      console.log(`- ${chalk.cyan(devDependency)}`);
-    }
-    console.log();
 
-    const devInstallFlags = { devDependencies: true, ...installFlags };
-    await install(root, devDependencies, devInstallFlags);
-  }
   console.log();
   /**
    * Copy the template files to the target directory.
@@ -137,8 +125,7 @@ export async function createApp({
     cwd: path.join(__dirname, "templates", template),
     rename: (name) => {
       switch (name) {
-        case "gitignore":
-        case "eslintrc.json": {
+        case "gitignore": {
           return ".".concat(name);
         }
         // README.md is ignored by webpack-asset-relocator-loader used by ncc:
@@ -153,6 +140,7 @@ export async function createApp({
     },
   });
 
+  // NO IDEA Did not work. Maybe because it is in a git repo already
   if (tryGitInit(root)) {
     console.log("Initialized a git repository.");
     console.log();
