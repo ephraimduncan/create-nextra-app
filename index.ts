@@ -107,7 +107,7 @@ async function run(): Promise<void> {
     if (!(reason instanceof DownloadError)) {
       throw reason;
     }
-    // NO IDEA why createApp is being called again after there is a error
+
     await createApp({
       appPath: resolvedProjectPath,
       packageManager,

@@ -59,9 +59,6 @@ export async function createApp({
 
   process.chdir(root);
 
-  const packageJsonPath = path.join(root, "package.json");
-  let hasPackageJson = false;
-
   console.log(chalk.bold(`Using ${packageManager}.`));
   /**
    * Create a package.json for the new project.
@@ -87,11 +84,18 @@ export async function createApp({
   /**
    * Default dependencies.
    */
-  // TODO: Update dependencies to nextra dependencies
   let dependencies = ["react", "react-dom", "next", "nextra", "nextra-theme-docs"];
 
   if (blog) {
-    dependencies = ["react", "react-dom", "next", "nextra", "nextra-theme-blog"];
+    dependencies = [
+      "react",
+      "react-dom",
+      "next",
+      "nextra",
+      "nextra-theme-blog",
+      "gray-matter",
+      "rss",
+    ];
   }
   /**
    * Install package.json dependencies if they exist.
@@ -105,8 +109,9 @@ export async function createApp({
     console.log();
 
     // TODO: pause install for now
-    // await install(root, dependencies, installFlags);
-    console.log("Install Complete: TODO: Replace");
+
+    await install(root, dependencies, installFlags);
+    // console.log("Install Complete: TODO: Replace");
   }
 
   console.log();
@@ -133,7 +138,6 @@ export async function createApp({
     },
   });
 
-  // NO IDEA Did not work. Maybe because it is in a git repo already
   if (tryGitInit(root)) {
     console.log("Initialized a git repository.");
     console.log();
@@ -148,22 +152,22 @@ export async function createApp({
 
   console.log(`${chalk.green("Success!")} Created ${appName} at ${appPath}`);
 
-  if (hasPackageJson) {
-    console.log("Inside that directory, you can run several commands:");
-    console.log();
-    console.log(chalk.cyan(`  ${packageManager} ${useYarn ? "" : "run "}dev`));
-    console.log("    Starts the development server.");
-    console.log();
-    console.log(chalk.cyan(`  ${packageManager} ${useYarn ? "" : "run "}build`));
-    console.log("    Builds the app for production.");
-    console.log();
-    console.log(chalk.cyan(`  ${packageManager} start`));
-    console.log("    Runs the built app in production mode.");
-    console.log();
-    console.log("We suggest that you begin by typing:");
-    console.log();
-    console.log(chalk.cyan("  cd"), cdpath);
-    console.log(`  ${chalk.cyan(`${packageManager} ${useYarn ? "" : "run "}dev`)}`);
-  }
+  console.log();
+
+  console.log("Inside that directory, you can run several commands:");
+  console.log();
+  console.log(chalk.cyan(`  ${packageManager} ${useYarn ? "" : "run "}dev`));
+  console.log("    Starts the development server.");
+  console.log();
+  console.log(chalk.cyan(`  ${packageManager} ${useYarn ? "" : "run "}build`));
+  console.log("    Builds the app for production.");
+  console.log();
+  console.log(chalk.cyan(`  ${packageManager} start`));
+  console.log("    Runs the built app in production mode.");
+  console.log();
+  console.log("We suggest that you begin by typing:");
+  console.log();
+  console.log(chalk.cyan("  cd"), cdpath);
+  console.log(`  ${chalk.cyan(`${packageManager} ${useYarn ? "" : "run "}dev`)}`);
   console.log();
 }
