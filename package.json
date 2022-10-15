@@ -1,6 +1,6 @@
 {
-  "name": "create-next-app",
-  "version": "0.1.2",
+  "name": "create-nextra-app",
+  "version": "0.2.0",
   "keywords": [
     "react",
     "next",
@@ -24,7 +24,6 @@
     "dev": "ncc build ./index.ts -w -o dist/",
     "prerelease": "rimraf ./dist/",
     "release": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
-    "prepublishOnly": "cd ../../ && turbo run build",
     "build": "pnpm release"
   },
   "devDependencies": {
