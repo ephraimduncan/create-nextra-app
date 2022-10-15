@@ -102,7 +102,6 @@ export async function createApp({
     // TODO: pause install for now
 
     await install(root, dependencies, installFlags);
-    // console.log("Install Complete: TODO: Replace");
   }
 
   console.log();

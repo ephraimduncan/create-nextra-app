@@ -20,7 +20,7 @@ const program = new Commander.Command(packageJson.name)
     projectPath = name;
   })
   .option(
-    "-b, --blog",
+    "--b, --blog",
     `
 
   Initialize as a Nextra Blog Theme.
