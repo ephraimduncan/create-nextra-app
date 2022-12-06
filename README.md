@@ -13,11 +13,11 @@ pnpm create nextra-app
 Or, for a [Nextra Blog Theme](https://nextra.vercel.app/themes/blog)
 
 ```bash
-npx create-next-app@latest --blog
+npx create-nextra-app@latest --blog
 # or
-yarn create next-app --blog
+yarn create nextra-app --blog
 # or
-pnpm create next-app --blog
+pnpm create nextra-app --blog
 ```
 
 To create a new app in a specific folder, you can send a name as an argument. For example, the following command will create a new Next.js app called `blog-app` in a folder with the same name:
